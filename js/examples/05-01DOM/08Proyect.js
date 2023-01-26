@@ -19,6 +19,10 @@
 				++cubes;
 			};
 
+			function destroyCube() {
+				--cubes;
+			}
+
 			/**
 			 * Método que muestra el total de cubos creados.
 			 * @returns El total de cubos creados.
@@ -29,6 +33,7 @@
 
 			return {
 				newCube,
+				destroyCube,
 				showTotalInstances
 			}
 		}
@@ -150,6 +155,12 @@
 				alert("No se puede reducir más el cubo. El limite es 10 pixeles.");
 			}
 		}
+
+		// Si se hace clic en un cubo este se elimina.
+		cube.addEventListener("click", function() {
+			counter.destroyCube();
+			this.remove();
+		});
 
 		function randomColor(cube){
 			let r = Math.floor((Math.random() * 256));
