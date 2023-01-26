@@ -98,8 +98,20 @@
 
 			cube.style.width = `${size}px`;
 			cube.style.height = `${size}px`;
+		}
 
-			console.log(cube.style.width);
+		function decrementSize(cube) {
+			const w = cube.style.width;
+			let size = +w.slice(0, 2);
+
+			// El tamaño cómo mínimo debe de ser de 10px.
+			if(!(size <= 10)) {
+				size -= 5;
+				cube.style.width = `${size}px`;
+				cube.style.height = `${size}px`;
+			} else {
+				alert("No se puede reducir más el cubo. El limite es 10 pixeles.");
+			}
 		}
 
 		function randomColor(cube){
@@ -169,7 +181,7 @@
 						incrementSize(cube);
 						break;
 					case "sizeDown":
-						// decrementSize(cube);
+						decrementSize(cube);
 						break;
 					case "color":
 						randomColor(cube);
