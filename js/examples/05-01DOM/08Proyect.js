@@ -46,6 +46,12 @@
 				case "KeyC":
 					addAction("color");
 					break;
+				case "NumpadAdd":
+					addAction("sizeUp");
+					break;
+				case "NumpadSubtract":
+					addAction("sizeDown");
+					break;
 				case "Enter":
 					executeAcctions();
 					break;
@@ -82,6 +88,18 @@
 			left += 10;
 			left = (left > area.offsetWidth - cube.offsetWidth)? area.offsetWidth - cube.offsetWidth : left;
 			cube.style.left = left + "px";
+		}
+
+		function incrementSize(cube) {
+			const w = cube.style.width;
+			let size = +w.slice(0, 2);
+			
+			size += 5;
+
+			cube.style.width = `${size}px`;
+			cube.style.height = `${size}px`;
+
+			console.log(cube.style.width);
 		}
 
 		function randomColor(cube){
@@ -146,6 +164,12 @@
 						break;
 					case "right":
 						moveRight(cube);
+						break;
+					case "sizeUp":
+						incrementSize(cube);
+						break;
+					case "sizeDown":
+						// decrementSize(cube);
 						break;
 					case "color":
 						randomColor(cube);
