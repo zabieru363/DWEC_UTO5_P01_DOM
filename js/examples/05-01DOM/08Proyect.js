@@ -3,10 +3,41 @@
 	let buttons = divExamples.getElementsByClassName('tab-pane')[7].getElementsByTagName('button');
 
 	function project(){
+
+		/**
+		 * Clossure para contar los cubos que se van creando.
+		 * @returns Un objeto literal con funciones para manejar
+		 * el contador.
+		 */
+		function instancesCounter() {
+			let cubes = 0;	// Variable para ir contando los cubos.
+
+			/**
+			 * Método que suma 1 al contador de cubos.
+			 */
+			function newCube() {
+				++cubes;
+			};
+
+			/**
+			 * Método que muestra el total de cubos creados.
+			 * @returns El total de cubos creados.
+			 */
+			function showTotalInstances() {
+				return cubes;
+			}
+
+			return {
+				newCube,
+				showTotalInstances
+			}
+		}
+
 		// Variables globales
 		let area;
 		let cube;
 		let acctions = [];
+		let counter = instancesCounter();
 
 		// Área para el proyecto
 		let main = document.getElementsByTagName("main")[0];
@@ -17,14 +48,20 @@
 		area.style.position = "relative";
 		main.parentElement.insertBefore(area, main);
 
-		// Pieza que queremos mover
+		// Crear el cubo.
 		cube = document.createElement("div");
 		cube.style.background = "red";
+		cube.style.color = "white";
 		cube.style.width = "50px";
 		cube.style.height = "50px";
 		cube.style.position = "absolute";
 		cube.style.top = "100px";
 		cube.style.left = "150px";
+
+		// Añadimos un número de instancia al cubo con un contador.
+		counter.newCube();
+		const number = document.createTextNode(counter.showTotalInstances());
+		cube.appendChild(number);
 		area.appendChild(cube);
 
 		// Evento de pulsado de tecla.
