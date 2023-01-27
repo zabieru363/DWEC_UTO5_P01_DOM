@@ -40,8 +40,9 @@
 
 		// Variables globales
 		let area;
-		let cube;
+		const cube = document.createElement("div");
 		let acctions = [];
+		const coordinates = document.createElement("span");
 		let counter = instancesCounter();
 
 		// Área para el proyecto
@@ -54,20 +55,34 @@
 		main.parentElement.insertBefore(area, main);
 
 		// Crear el cubo.
-		cube = document.createElement("div");
-		cube.style.background = "red";
-		cube.style.color = "white";
-		cube.style.width = "50px";
-		cube.style.height = "50px";
-		cube.style.position = "absolute";
-		cube.style.top = "100px";
-		cube.style.left = "150px";
+		// cube = document.createElement("div");
+		// cube.style.background = "red";
+		// cube.style.color = "white";
+		// cube.style.width = "50px";
+		// cube.style.height = "50px";
+		// cube.style.position = "absolute";
+		// cube.style.top = "100px";
+		// cube.style.left = "150px";
+
+		area.addEventListener("click", function(e) {
+			cube.style.background = "red";
+			cube.style.color = "white";
+			cube.style.width = "50px";
+			cube.style.height = "50px";
+			cube.style.position = "absolute";
+			cube.style.top = "100px"
+			cube.style.left = "150px";
+			counter.newCube();
+			const number = document.createTextNode(counter.showTotalInstances());
+			cube.appendChild(number);
+			this.appendChild(cube);
+		});
 
 		// Añadimos un número de instancia al cubo con un contador.
-		counter.newCube();
-		const number = document.createTextNode(counter.showTotalInstances());
-		cube.appendChild(number);
-		area.appendChild(cube);
+		// counter.newCube();
+		// const number = document.createTextNode(counter.showTotalInstances());
+		// cube.appendChild(number);
+		// area.appendChild(cube);
 
 		// Evento de pulsado de tecla.
 		document.addEventListener("keydown", function (event) {
@@ -155,6 +170,24 @@
 				alert("No se puede reducir más el cubo. El limite es 10 pixeles.");
 			}
 		}
+
+		area.addEventListener("mousemove", function(e) {
+			this.append(coordinates);
+			coordinates.style.width = "100px";
+			coordinates.style.height = "50px";
+			coordinates.style.textAlign = "center";
+			coordinates.style.background = "#1d1d1d";
+			coordinates.style.color = "white";
+			coordinates.style.border = "1px solid #ddd";
+			coordinates.style.display = "block";
+			coordinates.style.color = "black";
+			coordinates.textContent = `${e.clientX} - ${e.clientY}`;
+			console.log("Se ha entrado al cubo.");
+		});
+
+		area.addEventListener("mouseleave", function(e) {
+			coordinates.style.display = "none";
+		});
 
 		// Si se hace clic en un cubo este se elimina.
 		cube.addEventListener("click", function() {
