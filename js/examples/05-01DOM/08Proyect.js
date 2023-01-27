@@ -172,17 +172,22 @@
 		}
 
 		area.addEventListener("mousemove", function(e) {
+			let x = e.offsetX;
+			let y = e.offsetY;
+
 			this.append(coordinates);
-			coordinates.style.width = "100px";
-			coordinates.style.height = "50px";
+			coordinates.style.display = "block";
+			coordinates.style.position = "fixed";
+			coordinates.textContent = `Eje X:${x} - Eje Y:${y}`;
 			coordinates.style.textAlign = "center";
+			// Intento que la capa siga al cursor lo máximo posible.
+			coordinates.style.top = y + 150 + "px";
+			coordinates.style.left = x + 150 + "px";
+			coordinates.style.width = "200px";
+			coordinates.style.height = "50px";
 			coordinates.style.background = "#1d1d1d";
 			coordinates.style.color = "white";
 			coordinates.style.border = "1px solid #ddd";
-			coordinates.style.display = "block";
-			coordinates.style.color = "black";
-			coordinates.textContent = `${e.clientX} - ${e.clientY}`;
-			console.log("Se ha entrado al cubo.");
 		});
 
 		area.addEventListener("mouseleave", function(e) {
