@@ -40,7 +40,6 @@
 
 		// Variables globales
 		let area;
-		const cube = document.createElement("div");
 		let acctions = [];
 		const coordinates = document.createElement("span");
 		let counter = instancesCounter();
@@ -55,34 +54,23 @@
 		main.parentElement.insertBefore(area, main);
 
 		// Crear el cubo.
-		// cube = document.createElement("div");
-		// cube.style.background = "red";
-		// cube.style.color = "white";
-		// cube.style.width = "50px";
-		// cube.style.height = "50px";
-		// cube.style.position = "absolute";
-		// cube.style.top = "100px";
-		// cube.style.left = "150px";
-
 		area.addEventListener("click", function(e) {
+			let x = e.offsetX;
+			let y = e.offsetY;
+
+			const cube = document.createElement("div");
 			cube.style.background = "red";
 			cube.style.color = "white";
 			cube.style.width = "50px";
 			cube.style.height = "50px";
 			cube.style.position = "absolute";
-			cube.style.top = "100px"
-			cube.style.left = "150px";
+			cube.style.top = y + "px"
+			cube.style.left = x + "px";
 			counter.newCube();
 			const number = document.createTextNode(counter.showTotalInstances());
 			cube.appendChild(number);
 			this.appendChild(cube);
 		});
-
-		// Añadimos un número de instancia al cubo con un contador.
-		// counter.newCube();
-		// const number = document.createTextNode(counter.showTotalInstances());
-		// cube.appendChild(number);
-		// area.appendChild(cube);
 
 		// Evento de pulsado de tecla.
 		document.addEventListener("keydown", function (event) {
