@@ -52,6 +52,7 @@
 		let counter = instancesCounter();
 		// Contador para contar cuantos cubos se han eliminado.
 		let removedCubes = 0;
+		const cubes = [];	// Colección para guardar los cubos que se van creando.
 
 		// Área para el proyecto
 		let main = document.getElementsByTagName("main")[0];
@@ -61,6 +62,30 @@
 		area.style.height = "400px";
 		area.style.position = "relative";
 		main.parentElement.insertBefore(area, main);
+
+		// Listeners del area del proyecto.
+		area.addEventListener("mousemove", function(e) {
+			let x = e.offsetX;
+			let y = e.offsetY;
+
+			this.append(coordinates);
+			coordinates.style.display = "block";
+			coordinates.style.position = "fixed";
+			coordinates.textContent = `Eje X:${x} - Eje Y:${y}`;
+			coordinates.style.textAlign = "center";
+			// Intento que la capa siga al cursor lo máximo posible.
+			coordinates.style.top = y + 150 + "px";
+			coordinates.style.left = x + 150 + "px";
+			coordinates.style.width = "200px";
+			coordinates.style.height = "50px";
+			coordinates.style.background = "#1d1d1d";
+			coordinates.style.color = "white";
+			coordinates.style.border = "1px solid #ddd";
+		});
+
+		area.addEventListener("mouseleave", function(e) {
+			coordinates.style.display = "none";
+		});
 		
 		// Crear el cubo.
 		area.addEventListener("click", function(e) {
@@ -68,6 +93,7 @@
 			let y = e.offsetY;
 			
 			const cube = document.createElement("div");
+			cube.className = "cube";
 			cube.style.background = "red";
 			cube.style.color = "white";
 			cube.style.width = "50px";
@@ -79,6 +105,7 @@
 			let instanceNumber = document.createTextNode(counter.showTotalInstances());
 			cube.append(instanceNumber);
 			this.append(cube);
+			cubes.push(cube);
 			
 			// Si se hace clic en un cubo este se elimina.
 			cube.addEventListener("click", function(e) {
@@ -89,7 +116,7 @@
 
 				cube.addEventListener("event", function() {
 					showid.style.display = "block";
-					showid.textContent = `Identificador eliminado ${cube.textContent}. Cubos eliminados ${removedCubes}`;
+					showid.textContent = `Cubo ${cube.textContent} eliminado. Total cubos eliminados ${removedCubes}`;
 					showid.style.textAlign = "center";
 					showid.style.width = "300px";
 					showid.style.height = "50px";
@@ -172,11 +199,14 @@
 		function incrementSize(cube) {
 			const w = cube.style.width;
 			let size = +w.slice(0, 2);
-			
-			size += 5;
 
-			cube.style.width = `${size}px`;
-			cube.style.height = `${size}px`;
+			if(!(size >= 100)) {
+				size += 5;
+				cube.style.width = `${size}px`;
+				cube.style.height = `${size}px`;
+			} else {
+				alert("No se puede aumentar más el cubo. El limite es 100 pixeles");
+			}
 		}
 
 		function decrementSize(cube) {
@@ -192,29 +222,6 @@
 				alert("No se puede reducir más el cubo. El limite es 10 pixeles.");
 			}
 		}
-
-		area.addEventListener("mousemove", function(e) {
-			let x = e.offsetX;
-			let y = e.offsetY;
-
-			this.append(coordinates);
-			coordinates.style.display = "block";
-			coordinates.style.position = "fixed";
-			coordinates.textContent = `Eje X:${x} - Eje Y:${y}`;
-			coordinates.style.textAlign = "center";
-			// Intento que la capa siga al cursor lo máximo posible.
-			coordinates.style.top = y + 150 + "px";
-			coordinates.style.left = x + 150 + "px";
-			coordinates.style.width = "200px";
-			coordinates.style.height = "50px";
-			coordinates.style.background = "#1d1d1d";
-			coordinates.style.color = "white";
-			coordinates.style.border = "1px solid #ddd";
-		});
-
-		area.addEventListener("mouseleave", function(e) {
-			coordinates.style.display = "none";
-		});
 
 		function randomColor(cube){
 			let r = Math.floor((Math.random() * 256));
@@ -241,13 +248,13 @@
 			span.style.cursor = "pointer";
 
 			span.addEventListener("mouseenter", function () {
-					this.style.backgroundColor = "red";
-					this.style.color = "white";
+				this.style.backgroundColor = "red";
+				this.style.color = "white";
 			});
 
 			span.addEventListener("mouseleave", function () {
-					this.style.backgroundColor = "white";
-					this.style.color = "black";
+				this.style.backgroundColor = "white";
+				this.style.color = "black";
 			});
 
 			span.addEventListener("click", function () {
@@ -266,34 +273,36 @@
 		function executeAcctions(){
 			if(acctions.length > 0){
 				let action = acctions.shift();
-				switch(action.action){
-					case "up":
-						moveUp(cube);
-						break;
-					case "down":
-						moveDown(cube);
-						break;
-					case "left":
-						moveLeft(cube);
-						break;
-					case "right":
-						moveRight(cube);
-						break;
-					case "sizeUp":
-						incrementSize(cube);
-						break;
-					case "sizeDown":
-						decrementSize(cube);
-						break;
-					case "color":
-						randomColor(cube);
-						break;
-					default:
-						break;
+				for(const cube of cubes) {
+					switch(action.action){
+						case "up":
+							moveUp(cube);
+							break;
+						case "down":
+							moveDown(cube);
+							break;
+						case "left":
+							moveLeft(cube);
+							break;
+						case "right":
+							moveRight(cube);
+							break;
+						case "sizeUp":
+							incrementSize(cube);
+							break;
+						case "sizeDown":
+							decrementSize(cube);
+							break;
+						case "color":
+							randomColor(cube);
+							break;
+						default:
+							break;
+					}
+	
+					action.span.remove();
+					setTimeout(executeAcctions, 50);
 				}
-
-				action.span.remove();
-				setTimeout(executeAcctions, 50);
 			}
 		}
 	}
