@@ -16,11 +16,11 @@
 			 * Método que suma 1 al contador de cubos.
 			 */
 			function newCube() {
-				++cubes;
+				cubes++;
 			};
 
 			function destroyCube() {
-				--cubes;
+				cubes--;
 			}
 
 			/**
@@ -67,9 +67,15 @@
 			cube.style.top = y + "px"
 			cube.style.left = x + "px";
 			counter.newCube();
-			const number = document.createTextNode(counter.showTotalInstances());
+			let number = document.createTextNode(counter.showTotalInstances());
 			cube.appendChild(number);
 			this.appendChild(cube);
+
+			// Si se hace clic en un cubo este se elimina.
+			cube.addEventListener("click", function() {
+				counter.destroyCube();
+				this.remove();
+			});
 		});
 
 		// Evento de pulsado de tecla.
@@ -180,12 +186,6 @@
 
 		area.addEventListener("mouseleave", function(e) {
 			coordinates.style.display = "none";
-		});
-
-		// Si se hace clic en un cubo este se elimina.
-		cube.addEventListener("click", function() {
-			counter.destroyCube();
-			this.remove();
 		});
 
 		function randomColor(cube){
