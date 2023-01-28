@@ -41,22 +41,19 @@
 			}
 		}
 
-		// Evento personalizado.
-		const customEvent = new CustomEvent("event", {bubbles: false});
-
+		
 		// Variables globales
-		let area;
-		let acctions = [];
 		const coordinates = document.createElement("span");
 		const showid = document.createElement("span");
 		let counter = instancesCounter();
-		// Contador para contar cuantos cubos se han eliminado.
-		let removedCubes = 0;
+		let removedCubes = 0;	// Contador para contar cuantos cubos se han eliminado.
+		const acctions = [];
 		const cubes = [];	// Colección para guardar los cubos que se van creando.
+		const customEvent = new CustomEvent("event", {bubbles: false});		// Evento personalizado.
 
 		// Área para el proyecto
 		let main = document.getElementsByTagName("main")[0];
-		area = document.createElement("div");
+		const area = document.createElement("div");
 		area.classList.add("container");
 		area.style.border = "2px solid red";
 		area.style.height = "400px";
@@ -89,6 +86,21 @@
 			coordinates.style.display = "none";
 		});
 
+		// * CUBO INICIAL
+		const cube = document.createElement("div");
+		cube.style.background = "red";
+		cube.style.color = "white";
+		cube.style.width = "50px";
+		cube.style.height = "50px";
+		cube.style.position = "absolute";
+		cube.style.top = "100px";
+		cube.style.left = "150px";
+		counter.newCube();
+		const initialInstance = document.createTextNode(counter.showTotalInstances());
+		cube.appendChild(initialInstance);
+		area.appendChild(cube);
+		cubes.push(cube);
+
 		// Contenedor para mostrar los cubos eliminados.
 		showid.style.textAlign = "center";
 		showid.style.width = "300px";
@@ -99,24 +111,19 @@
 		showid.style.display = "none";
 		area.appendChild(showid);
 		
-		// Crear el cubo.
+		// Crear cubos en la posición que se quiera.
 		area.addEventListener("click", function(e) {
 			let x = e.offsetX;
 			let y = e.offsetY;
 			
-			const cube = document.createElement("div");
-			cube.style.background = "red";
-			cube.style.color = "white";
-			cube.style.width = "50px";
-			cube.style.height = "50px";
-			cube.style.position = "absolute";
-			cube.style.top = y + "px"
-			cube.style.left = x + "px";
+			const newCube = cube.cloneNode();
+			newCube.style.top = y + "px"
+			newCube.style.left = x + "px";
 			counter.newCube();
-			let instanceNumber = document.createTextNode(counter.showTotalInstances());
-			cube.append(instanceNumber);
-			this.append(cube);
-			cubes.push(cube);
+			const numberInstance = document.createTextNode(counter.showTotalInstances());
+			newCube.append(numberInstance);
+			this.append(newCube);
+			cubes.push(newCube);
 			
 			// Si se hace clic en un cubo este se elimina.
 			cube.addEventListener("click", function(e) {
