@@ -11,6 +11,7 @@
 		 */
 		function instancesCounter() {
 			let cubes = 0;	// Variable para ir contando los cubos.
+			let removedCubes = 0; 	// Contador para contar los cubos que se van eliminando.
 
 			/**
 			 * Método que suma 1 al contador de cubos.
@@ -27,6 +28,13 @@
 			}
 
 			/**
+			 * Método que suma 1 al contador de cubos eliminados.
+			 */
+			function addRemovedCube() {
+				removedCubes++;
+			}
+
+			/**
 			 * Método que muestra el total de cubos creados.
 			 * @returns El total de cubos creados.
 			 */
@@ -34,10 +42,21 @@
 				return cubes;
 			}
 
+			/**
+			 * Método que devuelve todos los cubos que se
+			 * han eliminado.
+			 * @returns Todos los cubos que se han eliminado.
+			 */
+			function showTotalRemovedCubes() {
+				return removedCubes;
+			}
+
 			return {
 				newCube,
 				destroyCube,
-				showTotalInstances
+				addRemovedCube,
+				showTotalInstances,
+				showTotalRemovedCubes
 			}
 		}
 
@@ -46,7 +65,6 @@
 		const coordinates = document.createElement("span");
 		const showid = document.createElement("span");
 		let counter = instancesCounter();
-		let removedCubes = 0;	// Contador para contar cuantos cubos se han eliminado.
 		const acctions = [];
 		const cubes = [];	// Colección para guardar los cubos que se van creando.
 		const customEvent = new CustomEvent("event", {bubbles: false});		// Evento personalizado.
@@ -103,7 +121,7 @@
 
 		// El primer cubo inicial también se debe de poder eliminar.
 		cube.addEventListener("event", function() {
-			showid.textContent = `Cubo ${cube.textContent} eliminado. Total cubos eliminados ${removedCubes}`;
+			showid.textContent = `Cubo ${cube.textContent} eliminado. Total cubos eliminados ${counter.showTotalRemovedCubes()}`;
 			showid.style.display = "block";
 		});
 
@@ -112,7 +130,7 @@
 			const pos = cubes.findIndex(c => c.textContent == counter.showTotalInstances());
 			cubes.splice(pos, 1);	// También tenemos que eliminar el cubo de la colección.
 			counter.destroyCube();
-			removedCubes++;
+			counter.addRemovedCube();
 			this.remove();
 
 			cube.dispatchEvent(customEvent);	// Ejecutamos el evento personalizado.
@@ -151,11 +169,11 @@
 				const pos = cubes.findIndex(c => c.textContent == counter.showTotalInstances());
 				cubes.splice(pos, 1);
 				counter.destroyCube();
-				removedCubes++;
+				counter.addRemovedCube();
 				this.remove();
 
 				newCube.addEventListener("event", function() {
-					showid.textContent = `Cubo ${newCube.textContent} eliminado. Total cubos eliminados ${removedCubes}`;
+					showid.textContent = `Cubo ${newCube.textContent} eliminado. Total cubos eliminados ${counter.showTotalRemovedCubes()}`;
 					showid.style.display = "block";
 				});
 
