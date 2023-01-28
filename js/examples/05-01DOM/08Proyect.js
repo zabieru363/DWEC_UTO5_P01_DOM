@@ -107,8 +107,12 @@
 			showid.style.display = "block";
 		});
 
-		cube.addEventListener("click", function() {
+		cube.addEventListener("click", function(e) {
+			e.stopPropagation();
+			const pos = cubes.findIndex(c => c.textContent == counter.showTotalInstances());
+			cubes.splice(pos, 1);	// También tenemos que eliminar el cubo de la colección.
 			counter.destroyCube();
+			removedCubes++;
 			this.remove();
 
 			cube.dispatchEvent(customEvent);	// Ejecutamos el evento personalizado.
@@ -144,12 +148,14 @@
 			// Si se hace clic en un cubo este se elimina.
 			newCube.addEventListener("click", function(e) {
 				e.stopPropagation();	// Hacemos que al destruir el cubo no se propague el evento.
+				const pos = cubes.findIndex(c => c.textContent == counter.showTotalInstances());
+				cubes.splice(pos, 1);
 				counter.destroyCube();
 				removedCubes++;
 				this.remove();
 
 				newCube.addEventListener("event", function() {
-					showid.textContent = `Cubo ${cube.textContent} eliminado. Total cubos eliminados ${removedCubes}`;
+					showid.textContent = `Cubo ${newCube.textContent} eliminado. Total cubos eliminados ${removedCubes}`;
 					showid.style.display = "block";
 				});
 
