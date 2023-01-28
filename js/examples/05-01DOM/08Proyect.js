@@ -19,6 +19,9 @@
 				cubes++;
 			};
 
+			/**
+			 * Método que resta 1 al contador de cubos.
+			 */
 			function destroyCube() {
 				cubes--;
 			}
@@ -38,11 +41,17 @@
 			}
 		}
 
+		// Evento personalizado.
+		const customEvent = new CustomEvent("event", {bubbles: false});
+
 		// Variables globales
 		let area;
 		let acctions = [];
 		const coordinates = document.createElement("span");
+		const showid = document.createElement("span");
 		let counter = instancesCounter();
+		// Contador para contar cuantos cubos se han eliminado.
+		let removedCubes = 0;
 
 		// Área para el proyecto
 		let main = document.getElementsByTagName("main")[0];
@@ -59,7 +68,6 @@
 			let y = e.offsetY;
 			
 			const cube = document.createElement("div");
-			cube.className = "cube";
 			cube.style.background = "red";
 			cube.style.color = "white";
 			cube.style.width = "50px";
@@ -68,15 +76,33 @@
 			cube.style.top = y + "px"
 			cube.style.left = x + "px";
 			counter.newCube();
-			let number = document.createTextNode(counter.showTotalInstances());
-			cube.append(number);
+			let instanceNumber = document.createTextNode(counter.showTotalInstances());
+			cube.append(instanceNumber);
 			this.append(cube);
 			
 			// Si se hace clic en un cubo este se elimina.
 			cube.addEventListener("click", function(e) {
 				e.stopPropagation();	// Hacemos que al destruir el cubo no se propague el evento.
 				counter.destroyCube();
+				removedCubes++;
 				this.remove();
+
+				cube.addEventListener("event", function() {
+					showid.style.display = "block";
+					showid.textContent = `Identificador eliminado ${cube.textContent}. Cubos eliminados ${removedCubes}`;
+					showid.style.textAlign = "center";
+					showid.style.width = "300px";
+					showid.style.height = "50px";
+					showid.style.background = "#1d1d1d";
+					showid.style.color = "white";
+					showid.style.border = "1px solid #ddd";
+					area.appendChild(showid);
+				});
+
+				cube.dispatchEvent(customEvent);
+				setTimeout(function() {
+					showid.style.display = "none";
+				}, 2000);
 			});
 		});
 
