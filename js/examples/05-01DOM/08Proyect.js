@@ -52,13 +52,14 @@
 		area.style.height = "400px";
 		area.style.position = "relative";
 		main.parentElement.insertBefore(area, main);
-
+		
 		// Crear el cubo.
 		area.addEventListener("click", function(e) {
 			let x = e.offsetX;
 			let y = e.offsetY;
-
+			
 			const cube = document.createElement("div");
+			cube.className = "cube";
 			cube.style.background = "red";
 			cube.style.color = "white";
 			cube.style.width = "50px";
@@ -68,11 +69,12 @@
 			cube.style.left = x + "px";
 			counter.newCube();
 			let number = document.createTextNode(counter.showTotalInstances());
-			cube.appendChild(number);
-			this.appendChild(cube);
-
+			cube.append(number);
+			this.append(cube);
+			
 			// Si se hace clic en un cubo este se elimina.
-			cube.addEventListener("click", function() {
+			cube.addEventListener("click", function(e) {
+				e.stopPropagation();	// Hacemos que al destruir el cubo no se propague el evento.
 				counter.destroyCube();
 				this.remove();
 			});
