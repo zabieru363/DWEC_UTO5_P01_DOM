@@ -63,29 +63,41 @@
 		area.style.position = "relative";
 		main.parentElement.insertBefore(area, main);
 
+		area.appendChild(coordinates);
+		coordinates.style.position = "fixed";
+		coordinates.style.width = "200px";
+		coordinates.style.height = "50px";
+		coordinates.style.border = "1px solid #ddd";
+		coordinates.style.background = "#1d1d1d";
+		coordinates.style.color = "white";
+		coordinates.style.textAlign = "center";
+		coordinates.style.display = "none";
+		
 		// Listeners del area del proyecto.
 		area.addEventListener("mousemove", function(e) {
 			let x = e.offsetX;
 			let y = e.offsetY;
-
-			this.append(coordinates);
-			coordinates.style.display = "block";
-			coordinates.style.position = "fixed";
-			coordinates.textContent = `Eje X:${x} - Eje Y:${y}`;
-			coordinates.style.textAlign = "center";
+			
 			// Intento que la capa siga al cursor lo máximo posible.
+			coordinates.style.display = "block";
 			coordinates.style.top = y + 150 + "px";
 			coordinates.style.left = x + 150 + "px";
-			coordinates.style.width = "200px";
-			coordinates.style.height = "50px";
-			coordinates.style.background = "#1d1d1d";
-			coordinates.style.color = "white";
-			coordinates.style.border = "1px solid #ddd";
+			coordinates.textContent = `Eje X:${x} - Eje Y:${y}`;
 		});
 
 		area.addEventListener("mouseleave", function(e) {
 			coordinates.style.display = "none";
 		});
+
+		// Contenedor para mostrar los cubos eliminados.
+		showid.style.textAlign = "center";
+		showid.style.width = "300px";
+		showid.style.height = "50px";
+		showid.style.background = "#1d1d1d";
+		showid.style.color = "white";
+		showid.style.border = "1px solid #ddd";
+		showid.style.display = "none";
+		area.appendChild(showid);
 		
 		// Crear el cubo.
 		area.addEventListener("click", function(e) {
@@ -93,7 +105,6 @@
 			let y = e.offsetY;
 			
 			const cube = document.createElement("div");
-			cube.className = "cube";
 			cube.style.background = "red";
 			cube.style.color = "white";
 			cube.style.width = "50px";
@@ -115,28 +126,20 @@
 				this.remove();
 
 				cube.addEventListener("event", function() {
-					showid.style.display = "block";
 					showid.textContent = `Cubo ${cube.textContent} eliminado. Total cubos eliminados ${removedCubes}`;
-					showid.style.textAlign = "center";
-					showid.style.width = "300px";
-					showid.style.height = "50px";
-					showid.style.background = "#1d1d1d";
-					showid.style.color = "white";
-					showid.style.border = "1px solid #ddd";
-					area.appendChild(showid);
+					showid.style.display = "block";
 				});
 
-				cube.dispatchEvent(customEvent);
+				cube.dispatchEvent(customEvent);	// Ejecutamos el evento personalizado.
 				setTimeout(function() {
-					showid.style.display = "none";
+					showid.style.display = "none";	// El mensaje desaparece despues de 2 segundos.
 				}, 2000);
 			});
 		});
 
 		// Evento de pulsado de tecla.
 		document.addEventListener("keydown", function (event) {
-			console.log(event.code);
-			switch (event.code){ // Detección de tecla pulsada.
+			switch(event.code){ // Detección de tecla pulsada.
 				case "ArrowUp":
 					addAction("up");
 					break;
@@ -200,19 +203,15 @@
 			const w = cube.style.width;
 			let size = +w.slice(0, 2);
 
-			if(!(size >= 100)) {
-				size += 5;
-				cube.style.width = `${size}px`;
-				cube.style.height = `${size}px`;
-			} else {
-				alert("No se puede aumentar más el cubo. El limite es 100 pixeles");
-			}
+			size += 5;
+			cube.style.width = `${size}px`;
+			cube.style.height = `${size}px`;
 		}
-
+		
 		function decrementSize(cube) {
 			const w = cube.style.width;
 			let size = +w.slice(0, 2);
-
+			
 			// El tamaño cómo mínimo debe de ser de 10px.
 			if(!(size <= 10)) {
 				size -= 5;
@@ -221,6 +220,7 @@
 			} else {
 				alert("No se puede reducir más el cubo. El limite es 10 pixeles.");
 			}
+			console.log(size);
 		}
 
 		function randomColor(cube){
