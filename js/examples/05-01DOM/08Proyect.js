@@ -101,6 +101,22 @@
 		area.appendChild(cube);
 		cubes.push(cube);
 
+		// El primer cubo inicial también se debe de poder eliminar.
+		cube.addEventListener("event", function() {
+			showid.textContent = `Cubo ${cube.textContent} eliminado. Total cubos eliminados ${removedCubes}`;
+			showid.style.display = "block";
+		});
+
+		cube.addEventListener("click", function() {
+			counter.destroyCube();
+			this.remove();
+
+			cube.dispatchEvent(customEvent);	// Ejecutamos el evento personalizado.
+			setTimeout(function() {
+				showid.style.display = "none";	// El mensaje desaparece despues de 2 segundos.
+			}, 2000);
+		});
+
 		// Contenedor para mostrar los cubos eliminados.
 		showid.style.textAlign = "center";
 		showid.style.width = "300px";
@@ -126,20 +142,20 @@
 			cubes.push(newCube);
 			
 			// Si se hace clic en un cubo este se elimina.
-			cube.addEventListener("click", function(e) {
+			newCube.addEventListener("click", function(e) {
 				e.stopPropagation();	// Hacemos que al destruir el cubo no se propague el evento.
 				counter.destroyCube();
 				removedCubes++;
 				this.remove();
 
-				cube.addEventListener("event", function() {
+				newCube.addEventListener("event", function() {
 					showid.textContent = `Cubo ${cube.textContent} eliminado. Total cubos eliminados ${removedCubes}`;
 					showid.style.display = "block";
 				});
 
-				cube.dispatchEvent(customEvent);	// Ejecutamos el evento personalizado.
+				newCube.dispatchEvent(customEvent);
 				setTimeout(function() {
-					showid.style.display = "none";	// El mensaje desaparece despues de 2 segundos.
+					showid.style.display = "none";
 				}, 2000);
 			});
 		});
@@ -224,10 +240,7 @@
 				size -= 5;
 				cube.style.width = `${size}px`;
 				cube.style.height = `${size}px`;
-			} else {
-				alert("No se puede reducir más el cubo. El limite es 10 pixeles.");
 			}
-			console.log(size);
 		}
 
 		function randomColor(cube){
