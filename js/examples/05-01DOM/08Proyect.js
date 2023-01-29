@@ -119,23 +119,14 @@
 		area.appendChild(cube);
 		cubes.push(cube);
 
-		// El primer cubo inicial también se debe de poder eliminar.
-		cube.addEventListener("event", function() {
-			showid.textContent = `Cubo ${cube.textContent} eliminado. Total cubos eliminados ${counter.showTotalRemovedCubes()}`;
-			showid.style.display = "block";
-		});
-
+		// Creo esta medida de seguridad ya que me daba problemas si eliminaba el primer cubo.
 		cube.addEventListener("click", function(e) {
 			e.stopPropagation();
-			const pos = cubes.findIndex(c => c.textContent == counter.showTotalInstances());
-			cubes.splice(pos, 1);	// También tenemos que eliminar el cubo de la colección.
-			counter.destroyCube();
-			counter.addRemovedCube();
-			this.remove();
+			showid.textContent = `El cubo inicial no se puede eliminar.`;
+			showid.style.display = "block";
 
-			cube.dispatchEvent(customEvent);	// Ejecutamos el evento personalizado.
 			setTimeout(function() {
-				showid.style.display = "none";	// El mensaje desaparece despues de 2 segundos.
+				showid.style.display = "none";
 			}, 2000);
 		});
 
