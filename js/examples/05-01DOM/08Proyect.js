@@ -60,7 +60,24 @@
 			}
 		}
 
-		
+		function createCube(instanceNumber) {
+			const cube = document.createElement("div");
+			cube.style.background = "red";
+			cube.style.color = "white";
+			cube.style.width = "50px";
+			cube.style.height = "50px";
+			cube.style.position = "absolute";
+			cube.style.top = "100px";
+			cube.style.left = "150px";
+			counter.newCube();
+			const number = document.createTextNode(instanceNumber);
+			cube.appendChild(number);
+			area.appendChild(cube);
+			cubes.push(cube);
+
+			return cube;
+		}
+
 		// Variables globales
 		const coordinates = document.createElement("span");
 		const showid = document.createElement("span");
@@ -105,19 +122,7 @@
 		});
 
 		// * CUBO INICIAL
-		const cube = document.createElement("div");
-		cube.style.background = "red";
-		cube.style.color = "white";
-		cube.style.width = "50px";
-		cube.style.height = "50px";
-		cube.style.position = "absolute";
-		cube.style.top = "100px";
-		cube.style.left = "150px";
-		counter.newCube();
-		const initialInstance = document.createTextNode(counter.showTotalInstances());
-		cube.appendChild(initialInstance);
-		area.appendChild(cube);
-		cubes.push(cube);
+		const cube = createCube(counter.showTotalInstances());
 
 		// Creo esta medida de seguridad ya que me daba problemas si eliminaba el primer cubo.
 		cube.addEventListener("click", function(e) {
