@@ -60,6 +60,13 @@
 			}
 		}
 
+		/**
+		 * Función que crea el primer cubo y devuelve el objeto HTML
+		 * para poder trabajar con el y manipularlo.
+		 * @param {*} instanceNumber El número de instancia del cubo.
+		 * @returns Un cubo para poder trabajar con el y hacer lo
+		 * que necesitemos.
+		 */
 		function createCube(instanceNumber) {
 			const cube = document.createElement("div");
 			cube.style.background = "red";
@@ -139,9 +146,9 @@
 		showid.style.textAlign = "center";
 		showid.style.width = "300px";
 		showid.style.height = "50px";
+		showid.style.border = "1px solid #ddd";
 		showid.style.background = "#1d1d1d";
 		showid.style.color = "white";
-		showid.style.border = "1px solid #ddd";
 		showid.style.display = "none";
 		area.appendChild(showid);
 		
