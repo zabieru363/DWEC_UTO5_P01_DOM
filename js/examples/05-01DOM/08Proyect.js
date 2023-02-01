@@ -155,14 +155,17 @@
 		});
 
 		// Contenedor para mostrar los cubos eliminados.
-		showid.style.textAlign = "center";
-		showid.style.width = "300px";
-		showid.style.height = "50px";
-		showid.style.border = "1px solid #ddd";
-		showid.style.background = "#1d1d1d";
-		showid.style.color = "white";
-		showid.style.display = "none";
-		area.appendChild(showid);
+		showid.css({
+			textAlign: "centert",
+			width: "300px",
+			height: "50px",
+			border: "1px solid #ddd",
+			background: "#1d1d1d",
+			color: "white",
+			display: "none"
+		});
+
+		area.append(showid);
 		
 		// Crear cubos en la posición que se quiera.
 		area.addEventListener("click", function(e) {
