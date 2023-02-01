@@ -67,7 +67,7 @@
 		 * @returns Un cubo para poder trabajar con el y hacer lo
 		 * que necesitemos.
 		 */
-		function createCube(instanceNumber) {
+		function createCube(instanceNumber = 1) {
 			const cube = $("<div></div>");
 
 			cube.css({
@@ -107,7 +107,7 @@
 			position: "relative"
 		});
 
-		area.prepend(main);
+		main.parent().get(0).insertBefore(area.get(0), main.get(0));
 		area.append(coordinates);
 
 		coordinates.css({
@@ -156,7 +156,7 @@
 
 		// Contenedor para mostrar los cubos eliminados.
 		showid.css({
-			textAlign: "centert",
+			textAlign: "center",
 			width: "300px",
 			height: "50px",
 			border: "1px solid #ddd",
@@ -240,10 +240,10 @@
 
 		// Funciones de implementación de acciones
 		function moveUp(cube){
-			let top = cube.offsetTop;
+			let top = cube.offset().top;
 			top -= 10;
 			top = (top < 0)? 0 : top;
-			cube.style.top = top + "px";
+			cube.css("top", top + "px");
 		}
 
 		function moveDown(cube){
