@@ -180,19 +180,18 @@
 			});
 
 			counter.newCube();
-			const numberInstance = counter.showTotalInstances();
-			newCube.text(numberInstance);
+			newCube.text(counter.showTotalInstances());
 			$(this).append(newCube);
 			cubes.push(newCube);
 			
 			// Si se hace clic en un cubo este se elimina.
-			newCube.addEventListener("click", function(e) {
+			newCube.on("click", function(e) {
 				e.stopPropagation();	// Hacemos que al destruir el cubo no se propague el evento.
-				const pos = cubes.findIndex(c => c.textContent == counter.showTotalInstances());
+				const pos = cubes.findIndex(c => c.text() == counter.showTotalInstances());
 				cubes.splice(pos, 1);
 				counter.destroyCube();
 				counter.addRemovedCube();
-				this.remove();
+				$(this).remove();
 
 				newCube.addEventListener("event", function() {
 					showid.textContent = `Cubo ${newCube.textContent} eliminado. Total cubos eliminados ${counter.showTotalRemovedCubes()}`;
