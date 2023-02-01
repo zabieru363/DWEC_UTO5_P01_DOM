@@ -136,8 +136,8 @@
 			coordinates.text(`Eje X:${x} - Eje Y:${y}`);
 		});
 
-		area.addEventListener("mouseleave", function(e) {
-			coordinates.style.display = "none";
+		area.on("mouseleave", function() {
+			coordinates.css("display", "none");
 		});
 
 		// * CUBO INICIAL
