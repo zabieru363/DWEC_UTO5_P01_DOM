@@ -89,42 +89,51 @@
 		}
 
 		// Variables globales
-		const coordinates = document.createElement("span");
-		const showid = document.createElement("span");
+		const coordinates = $("<span></span>");
+		const showid = $("<span></span>");
 		let counter = instancesCounter();
 		const acctions = [];
 		const cubes = [];	// Colección para guardar los cubos que se van creando.
 		const customEvent = new CustomEvent("event", {bubbles: false});		// Evento personalizado.
 
 		// Área para el proyecto
-		let main = document.getElementsByTagName("main")[0];
-		const area = document.createElement("div");
-		area.classList.add("container");
-		area.style.border = "2px solid red";
-		area.style.height = "400px";
-		area.style.position = "relative";
-		main.parentElement.insertBefore(area, main);
+		const main = $("main");
+		const area = $("<div></div>");
+		area.addClass("container");
 
-		area.appendChild(coordinates);
-		coordinates.style.position = "fixed";
-		coordinates.style.width = "200px";
-		coordinates.style.height = "50px";
-		coordinates.style.border = "1px solid #ddd";
-		coordinates.style.background = "#1d1d1d";
-		coordinates.style.color = "white";
-		coordinates.style.textAlign = "center";
-		coordinates.style.display = "none";
+		area.css({
+			border: "2px solid red",
+			height: "400px",
+			position: "relative"
+		});
+
+		area.prepend(main);
+		area.append(coordinates);
+
+		coordinates.css({
+			position: "fixed",
+			width: "200px",
+			height: "50px",
+			border: "1px solid #ddd",
+			background: "#1d1d1d",
+			color: "white",
+			textAlign: "center",
+			display: "none"
+		});
 		
 		// Listeners del area del proyecto.
-		area.addEventListener("mousemove", function(e) {
+		area.on("mousemove", function(e) {
 			let x = e.offsetX;
 			let y = e.offsetY;
-			
-			// Intento que la capa siga al cursor lo máximo posible.
-			coordinates.style.display = "block";
-			coordinates.style.top = y + 150 + "px";
-			coordinates.style.left = x + 150 + "px";
-			coordinates.textContent = `Eje X:${x} - Eje Y:${y}`;
+
+			coordinates.css({
+				// Intento que la capa siga al cursor lo máximo posible.
+				display: "block",
+				top:  `${y + 150}px`,
+				left: `${x + 150}px`
+			});
+
+			coordinates.text(`Eje X:${x} - Eje Y:${y}`);
 		});
 
 		area.addEventListener("mouseleave", function(e) {
