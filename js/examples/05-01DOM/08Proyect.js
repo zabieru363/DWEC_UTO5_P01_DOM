@@ -206,7 +206,7 @@
 		});
 
 		// Evento de pulsado de tecla.
-		document.addEventListener("keydown", function (event) {
+		$(document).on("keydown", function (event) {
 			switch(event.code){ // Detección de tecla pulsada.
 				case "ArrowUp":
 					addAction("up");
