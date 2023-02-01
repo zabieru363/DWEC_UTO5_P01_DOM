@@ -168,17 +168,21 @@
 		area.append(showid);
 		
 		// Crear cubos en la posición que se quiera.
-		area.addEventListener("click", function(e) {
+		area.on("click", function(e) {
 			let x = e.offsetX;
 			let y = e.offsetY;
 			
-			const newCube = cube.cloneNode();
-			newCube.style.top = y + "px"
-			newCube.style.left = x + "px";
+			const newCube = cube.clone();
+
+			newCube.css({
+				top: `${y}px`,
+				left: `${x}px`
+			});
+
 			counter.newCube();
-			const numberInstance = document.createTextNode(counter.showTotalInstances());
-			newCube.append(numberInstance);
-			this.append(newCube);
+			const numberInstance = counter.showTotalInstances();
+			newCube.text(numberInstance);
+			$(this).append(newCube);
 			cubes.push(newCube);
 			
 			// Si se hace clic en un cubo este se elimina.
