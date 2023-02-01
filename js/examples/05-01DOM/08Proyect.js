@@ -144,13 +144,13 @@
 		const cube = createCube(counter.showTotalInstances());
 
 		// Creo esta medida de seguridad ya que me daba problemas si eliminaba el primer cubo.
-		cube.addEventListener("click", function(e) {
+		cube.on("click", function(e) {
 			e.stopPropagation();
-			showid.textContent = `El cubo inicial no se puede eliminar.`;
-			showid.style.display = "block";
+			showid.text(`El cubo inicial no se puede eliminar.`);
+			showid.css("display", "block");
 
 			setTimeout(function() {
-				showid.style.display = "none";
+				showid.css("display", "none");
 			}, 2000);
 		});
 
