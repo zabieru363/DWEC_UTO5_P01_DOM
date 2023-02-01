@@ -68,18 +68,21 @@
 		 * que necesitemos.
 		 */
 		function createCube(instanceNumber) {
-			const cube = document.createElement("div");
-			cube.style.background = "red";
-			cube.style.color = "white";
-			cube.style.width = "50px";
-			cube.style.height = "50px";
-			cube.style.position = "absolute";
-			cube.style.top = "100px";
-			cube.style.left = "150px";
+			const cube = $("<div></div>");
+
+			cube.css({
+				background: "red",
+				color: "white",
+				width: "50px",
+				height: "50px",
+				position: "absolute",
+				top: "100px",
+				left: "150px"
+			});
+
 			counter.newCube();
-			const number = document.createTextNode(instanceNumber);
-			cube.appendChild(number);
-			area.appendChild(cube);
+			cube.text(instanceNumber);
+			cube.appendTo(area);
 			cubes.push(cube);
 
 			return cube;
