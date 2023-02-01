@@ -193,14 +193,14 @@
 				counter.addRemovedCube();
 				$(this).remove();
 
-				newCube.addEventListener("event", function() {
-					showid.textContent = `Cubo ${newCube.textContent} eliminado. Total cubos eliminados ${counter.showTotalRemovedCubes()}`;
-					showid.style.display = "block";
+				newCube.get(0).addEventListener("event", function() {
+					showid.text(`Cubo ${this.textContent} eliminado. Total cubos eliminados ${counter.showTotalRemovedCubes()}`);
+					showid.css("display", "block");
 				});
 
 				newCube.dispatchEvent(customEvent);
 				setTimeout(function() {
-					showid.style.display = "none";
+					showid.css("display", "none");
 				}, 2000);
 			});
 		});
