@@ -240,44 +240,47 @@
 
 		// Funciones de implementación de acciones
 		function moveUp(cube){
-			let top = cube.offset().top;
+			let top = cube.position().top;
 			top -= 10;
 			top = (top < 0)? 0 : top;
 			cube.css("top", top + "px");
 		}
 		
 		function moveDown(cube){
-			let top = cube.offset().top;
+			let top = cube.position().top;
 			top += 10;
 			top = (top > area.height() - cube.height()) ? area.height() - cube.height() : top;
 			cube.css("top", top + "px");
 		}
 		
 		function moveLeft(cube){
-			let left = cube.offset().left;
+			let left = cube.position().left;
 			left -= 10;
 			left = (left < 0)? 0 : left;
 			cube.css("left", left + "px");
 		}
 		
 		function moveRight(cube){
-			let left = cube.offset().left;
+			let left = cube.position().left;
 			left += 10;
 			left = (left > area.width() - cube.width()) ? area.width() - cube.width() : left;
 			cube.css("left", left + "px");
 		}
 
 		function incrementSize(cube) {
-			const w = cube.width();
+			let w = cube.width();
 
-			w += 5;
-
-			cube.width(w);
-			cube.height(w);
+			if(!(w >= 100)) {
+				w += 5;
+				cube.width(w);
+				cube.height(w);
+			} else {
+				alert("Los cubos no se pueden ampliar más! El limite es 100px");
+			}
 		}
 		
 		function decrementSize(cube) {
-			const w = cube.width();
+			let w = cube.width();
 			
 			// El tamaño cómo mínimo debe de ser de 10px.
 			if(!(w <= 10)) {
