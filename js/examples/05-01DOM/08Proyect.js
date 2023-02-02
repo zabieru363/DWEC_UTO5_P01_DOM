@@ -291,7 +291,7 @@
 			let r = Math.floor((Math.random() * 256));
 			let g = Math.floor((Math.random() * 256));
 			let b = Math.floor((Math.random() * 256));
-			cube.style.background = `rgb(${r}, ${g}, ${b})`;
+			cube.css("background", `rgb(${r}, ${g}, ${b})`);
 		}
 
 		// Registro de acción y generación de span
