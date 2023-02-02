@@ -208,7 +208,7 @@
 
 		// Evento de pulsado de tecla.
 		$(document).on("keydown", function (event) {
-			switch(event.code){ // Detección de tecla pulsada.
+			switch(event.code){ 	// Detección de tecla pulsada.
 				case "ArrowUp":
 					addAction("up");
 					break;
@@ -288,6 +288,8 @@
 				w -= 5;
 				cube.width(w);
 				cube.height(w);
+			} else {
+				alert("Los cubos no se pueden reducir más! El limite es 10px");
 			}
 		}
 
@@ -327,10 +329,11 @@
 						color: "black"
 					});
 				},
-				click() {
+				click(e) {
+					e.stopPropagation();	// Impedimos que al hacer clic en un span se creen cubos nuevos.
 					const index = acctions.findIndex(action => action.span === $(this));
 	
-					acctions.splice(index,1);
+					acctions.splice(index, 1);
 					$(this).remove();
 				}
 			});
