@@ -295,13 +295,10 @@
 		}
 
 		// Registro de acción y generación de span
-		function addAction(action){
-			let span = $("<span></span>");
+		function addAction(action) {
+			const span = $("<span></span>");
 
-			acctions.push({
-				action: action,
-				span: span
-			});
+			acctions.push({action, span});
 
 			span.text(action);
 			span.css({
@@ -327,9 +324,7 @@
 					});
 				},
 				click() {
-					let index = acctions.findIndex((action) => {
-						return action.span === this;
-					});
+					const index = acctions.findIndex(action => action.span === $(this));
 	
 					acctions.splice(index,1);
 					$(this).remove();
