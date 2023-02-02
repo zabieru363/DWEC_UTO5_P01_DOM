@@ -252,12 +252,12 @@
 			top = (top > area.height() - cube.height()) ? area.height() - cube.height() : top;
 			cube.css("top", top + "px");
 		}
-
+		
 		function moveLeft(cube){
-			let left = cube.offsetLeft;
+			let left = cube.offset().left;
 			left -= 10;
 			left = (left < 0)? 0 : left;
-			cube.style.left = left + "px";
+			cube.css("left", left + "px");
 		}
 
 		function moveRight(cube){
