@@ -94,10 +94,9 @@
 		let counter = instancesCounter();
 		const acctions = [];
 		const cubes = [];	// Colección para guardar los cubos que se van creando.
-		const customEvent = new CustomEvent("event", {bubbles: false});		// Evento personalizado.
+		const main = $("main");
 
 		// Área para el proyecto
-		const main = $("main");
 		const area = $("<div></div>");
 		area.addClass("container");
 
@@ -240,6 +239,11 @@
 		});
 
 		// Funciones de implementación de acciones
+
+		/**
+		 * Mueve el cubo 10 pixeles hacia arriba.
+		 * @param {*} cube El cubo que se quiere mover.
+		 */
 		function moveUp(cube){
 			let top = cube.position().top;
 			top -= 10;
@@ -247,6 +251,10 @@
 			cube.css("top", top + "px");
 		}
 		
+		/**
+		 * Mueve el cubo 10 pixeles hacia abajo.
+		 * @param {*} cube El cubo que se quiere mover.
+		 */
 		function moveDown(cube){
 			let top = cube.position().top;
 			top += 10;
@@ -254,6 +262,10 @@
 			cube.css("top", top + "px");
 		}
 		
+		/**
+		 * Mueve el cubo 10 píxeles hacia la izquierda.
+		 * @param {*} cube El cubo que se quiere mover.
+		 */
 		function moveLeft(cube){
 			let left = cube.position().left;
 			left -= 10;
@@ -261,6 +273,10 @@
 			cube.css("left", left + "px");
 		}
 		
+		/**
+		 * Mueve el cubo 10 píxeles hacia la derecha.
+		 * @param {*} cube El cubo que se quiere mover.
+		 */
 		function moveRight(cube){
 			let left = cube.position().left;
 			left += 10;
@@ -268,6 +284,10 @@
 			cube.css("left", left + "px");
 		}
 
+		/**
+		 * Aumenta el tamaño del cubo 5 pixeles.
+		 * @param {*} cube El cubo del cúal se quiere aumentar el tamaño.
+		 */
 		function incrementSize(cube) {
 			let w = cube.width();
 
@@ -280,6 +300,10 @@
 			}
 		}
 		
+		/**
+		 * Disminuye el tamaño del cubo 5 píxeles.
+		 * @param {*} cube El cubo del cuál se quiere disminuir el tamaño.
+		 */
 		function decrementSize(cube) {
 			let w = cube.width();
 			
@@ -293,6 +317,10 @@
 			}
 		}
 
+		/**
+		 * Permite cambiar el color del cubo.
+		 * @param {*} cube El cubo del cuál se quiere cambiar el color.
+		 */
 		function randomColor(cube){
 			let r = Math.floor((Math.random() * 256));
 			let g = Math.floor((Math.random() * 256));
@@ -300,7 +328,11 @@
 			cube.css("background", `rgb(${r}, ${g}, ${b})`);
 		}
 
-		// Registro de acción y generación de span
+		/**
+		 * Función que añade una acción al área de trabajo y a la
+		 * colección de acciones que se van mandando al cubo.
+		 * @param {*} action La acción que se quiere registrar.
+		 */
 		function addAction(action) {
 			const span = $("<span></span>");
 
@@ -341,7 +373,9 @@
 			area.append(span);
 		}
 
-		// Ejecución de acciones recursiva
+		/**
+		 * Función que ejecuta todas las acciones para todos los cubos.
+		 */
 		function executeAcctions(){
 			if(acctions.length > 0){
 				let action = acctions.shift();
