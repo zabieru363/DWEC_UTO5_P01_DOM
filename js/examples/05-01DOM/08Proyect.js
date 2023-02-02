@@ -193,15 +193,15 @@
 				counter.addRemovedCube();
 				$(this).remove();
 
-				newCube.get(0).addEventListener("event", function() {
-					showid.text(`Cubo ${this.textContent} eliminado. Total cubos eliminados ${counter.showTotalRemovedCubes()}`);
-					showid.css("display", "block");
-				});
+				// newCube.get(0).addEventListener("event", function() {
+				// 	showid.text(`Cubo ${this.textContent} eliminado. Total cubos eliminados ${counter.showTotalRemovedCubes()}`);
+				// 	showid.css("display", "block");
+				// });
 
-				newCube.dispatchEvent(customEvent);
-				setTimeout(function() {
-					showid.css("display", "none");
-				}, 2000);
+				// newCube.dispatchEvent(customEvent);
+				// setTimeout(function() {
+				// 	showid.css("display", "none");
+				// }, 2000);
 			});
 		});
 
@@ -245,12 +245,12 @@
 			top = (top < 0)? 0 : top;
 			cube.css("top", top + "px");
 		}
-
+		
 		function moveDown(cube){
-			let top = cube.offsetTop;
+			let top = cube.offset().top;
 			top += 10;
-			top = (top > area.offsetHeight - cube.offsetHeight)? area.offsetHeight - cube.offsetHeight : top;
-			cube.style.top = top + "px";
+			top = (top > area.height() - cube.height()) ? area.height() - cube.height() : top;
+			cube.css("top", top + "px");
 		}
 
 		function moveLeft(cube){
