@@ -296,41 +296,47 @@
 
 		// Registro de acción y generación de span
 		function addAction(action){
-			let span = document.createElement("span");
+			let span = $("<span></span>");
 
 			acctions.push({
 				action: action,
 				span: span
 			});
 
-			span.textContent = action;
-			span.style.padding = "10px";
-			span.style.border = "1px solid #ddd";
-			span.style.display = "block";
-			span.style.float = "left";
-			span.style.margin = "2px";
-			span.style.cursor = "pointer";
-
-			span.addEventListener("mouseenter", function () {
-				this.style.backgroundColor = "red";
-				this.style.color = "white";
+			span.text(action);
+			span.css({
+				padding: "10px",
+				border: "1px solid #ddd",
+				display: "block",
+				float: "left",
+				margin: "2px",
+				cursor: "pointer"
 			});
 
-			span.addEventListener("mouseleave", function () {
-				this.style.backgroundColor = "white";
-				this.style.color = "black";
+			span.on({
+				mouseenter() {
+					$(this).css({
+						background: "red",
+						color: "white"
+					});
+				},
+				mouseleave() {
+					$(this).css({
+						background: "white",
+						color: "black"
+					});
+				},
+				click() {
+					let index = acctions.findIndex((action) => {
+						return action.span === this;
+					});
+	
+					acctions.splice(index,1);
+					$(this).remove();
+				}
 			});
 
-			span.addEventListener("click", function () {
-				let index = acctions.findIndex((action) => {
-					return action.span === this;
-				});
-
-				acctions.splice(index,1);
-				this.remove();
-			});
-
-			area.appendChild(span);
+			area.append(span);
 		}
 
 		// Ejecución de acciones recursiva
