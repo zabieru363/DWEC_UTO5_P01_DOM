@@ -67,7 +67,7 @@
 		 * @returns Un cubo para poder trabajar con el y hacer lo
 		 * que necesitemos.
 		 */
-		function createCube(instanceNumber = 1) {
+		function createCube() {
 			const cube = $("<div></div>");
 
 			cube.css({
@@ -81,7 +81,7 @@
 			});
 
 			counter.newCube();
-			cube.text(instanceNumber);
+			cube.text(counter.showTotalInstances());
 			cube.appendTo(area);
 			cubes.push(cube);
 
@@ -107,7 +107,7 @@
 			position: "relative"
 		});
 
-		main.parent().get(0).insertBefore(area.get(0), main.get(0));
+		main.before(area);
 		area.append(coordinates);
 
 		coordinates.css({
@@ -141,7 +141,7 @@
 		});
 
 		// * CUBO INICIAL
-		const cube = createCube(counter.showTotalInstances());
+		const cube = createCube();
 
 		// Creo esta medida de seguridad ya que me daba problemas si eliminaba el primer cubo.
 		cube.on("click", function(e) {
