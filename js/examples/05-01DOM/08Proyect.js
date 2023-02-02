@@ -194,15 +194,15 @@
 				counter.addRemovedCube();
 				$(this).remove();
 
-				// newCube.get(0).addEventListener("event", function() {
-				// 	showid.text(`Cubo ${this.textContent} eliminado. Total cubos eliminados ${counter.showTotalRemovedCubes()}`);
-				// 	showid.css("display", "block");
-				// });
+				newCube.on("showCubes", function() {
+					showid.text(`Cubo ${$(this).text()} eliminado. Total cubos eliminados ${counter.showTotalRemovedCubes()}`);
+					showid.css("display", "block");
+				});
 
-				// newCube.dispatchEvent(customEvent);
-				// setTimeout(function() {
-				// 	showid.css("display", "none");
-				// }, 2000);
+				newCube.trigger("showCubes");	// Permite ejecutar un evento personalizado.
+				setTimeout(function() {
+					showid.css("display", "none");
+				}, 2000);
 			});
 		});
 
