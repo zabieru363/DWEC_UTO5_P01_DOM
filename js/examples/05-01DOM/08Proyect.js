@@ -259,12 +259,12 @@
 			left = (left < 0)? 0 : left;
 			cube.css("left", left + "px");
 		}
-
+		
 		function moveRight(cube){
-			let left = cube.offsetLeft;
+			let left = cube.offset().left;
 			left += 10;
-			left = (left > area.offsetWidth - cube.offsetWidth)? area.offsetWidth - cube.offsetWidth : left;
-			cube.style.left = left + "px";
+			left = (left > area.width() - cube.width()) ? area.width() - cube.width() : left;
+			cube.css("left", left + "px");
 		}
 
 		function incrementSize(cube) {
