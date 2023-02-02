@@ -120,24 +120,25 @@
 			textAlign: "center",
 			display: "none"
 		});
-		
+
 		// Listeners del area del proyecto.
-		area.on("mousemove", function(e) {
-			let x = e.offsetX;
-			let y = e.offsetY;
+		area.on({
+			mousemove(e) {
+				let x = e.offsetX;
+				let y = e.offsetY;
 
-			coordinates.css({
-				// Intento que la capa siga al cursor lo máximo posible.
-				display: "block",
-				top:  `${y + 150}px`,
-				left: `${x + 150}px`
-			});
+				coordinates.css({
+					// Intento que la capa siga al cursor lo máximo posible.
+					display: "block",
+					top:  `${y + 150}px`,
+					left: `${x + 150}px`
+				});
 
-			coordinates.text(`Eje X:${x} - Eje Y:${y}`);
-		});
-
-		area.on("mouseleave", function() {
-			coordinates.css("display", "none");
+				coordinates.text(`Eje X:${x} - Eje Y:${y}`);
+			},
+			mouseleave() {
+				coordinates.css("display", "none");
+			}
 		});
 
 		// * CUBO INICIAL
