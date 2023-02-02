@@ -270,21 +270,20 @@
 		function incrementSize(cube) {
 			const w = cube.width();
 
-			size += 5;
-			
+			w += 5;
+
 			cube.width(w);
 			cube.height(w);
 		}
 		
 		function decrementSize(cube) {
-			const w = cube.style.width;
-			let size = +w.slice(0, 2);
+			const w = cube.width();
 			
 			// El tamaño cómo mínimo debe de ser de 10px.
-			if(!(size <= 10)) {
-				size -= 5;
-				cube.style.width = `${size}px`;
-				cube.style.height = `${size}px`;
+			if(!(w <= 10)) {
+				w -= 5;
+				cube.width(w);
+				cube.height(w);
 			}
 		}
 
