@@ -268,12 +268,12 @@
 		}
 
 		function incrementSize(cube) {
-			const w = cube.style.width;
-			let size = +w.slice(0, 2);
+			const w = cube.width();
 
 			size += 5;
-			cube.style.width = `${size}px`;
-			cube.style.height = `${size}px`;
+			
+			cube.width(w);
+			cube.height(w);
 		}
 		
 		function decrementSize(cube) {
